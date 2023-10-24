@@ -1,9 +1,13 @@
-export class CompanyEntity {
-  name: string
-  email: string;
-  created_at: Date
+import { Exclude } from "class-transformer";
+import { CreateCompanyDto } from "../dto/company.dto";
+
+export class CompanyEntity extends CreateCompanyDto {
+  @Exclude()
+  password: string;
 
   constructor(partial: Partial<CompanyEntity>) {
-    Object.assign(this, partial)
+    super()
+
+    Object.assign(this, partial);
   }
 }

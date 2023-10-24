@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional, IsPositive } from 'class-validator'
+import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional } from 'class-validator'
 
 export class CategoryDto {
   category: {
