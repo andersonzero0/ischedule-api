@@ -14,10 +14,13 @@ model Client {
   id String @id @default(uuid())
   name String
   avatar_url String
-  email String
+  email String @unique
   password String
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
+
+  events Event[]
+  likes Like[]
   
   @@map("clients")
 }
@@ -26,23 +29,134 @@ model Category {
   id Int @id @default(autoincrement())
   name String
 
+  companies CategoriesOnCompany[]
+
   @@map("categories")
 }
 
+model CategoriesOnCompany {
+  company_id String
+  category_id Int
+
+  company Company @relation(fields: [company_id], references: [id])
+  category Category @relation(fields: [category_id], references: [id])
+  
+  @@id([company_id, category_id])
+
+  @@map("categories_company")
+}
 
 model Company {
   id String @id @default(uuid())
   name String
-  description String
-  avatar_url String
-  banner_url String
-  email String
-  phone String
-  categories Int[]
-  social Json
-  opening_time String
-  closing_time String
+  description String?
+  avatar_url String?
+  banner_url String?
+  email String @unique
+  phone String? @unique
+  document String? @unique
+  password String
+  social Json?
+  opening_time String?
+  closing_time String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  categories CategoriesOnCompany[]
+  likes Like[]
+  service Service[]
+  professionals Professional[]
+  event_time EventTime[]
 
   @@map("companies")
 }
 
+model Like {
+  id Int @id @default(autoincrement())
+  company_id String
+  client_id String
+  created_at DateTime @default(now())
+
+  companies Company @relation(fields: [company_id], references: [id])
+  clients Client @relation(fields: [client_id], references: [id])
+
+  @@map("likes")
+}
+
+model Service {
+  id Int @id @default(autoincrement())
+  name String
+  company_id String
+  price Float
+  estimated_time DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  companies Company @relation(fields: [company_id], references: [id])
+  
+  professionals ServiceOnProfessional[]
+  event_time EventTime[]
+  
+  @@map("services")
+}
+
+model ServiceOnProfessional {
+  service_id Int
+  professional_id Int
+
+  service Service @relation(fields: [service_id], references: [id])
+  professional Professional @relation(fields: [professional_id], references: [id])
+  
+  @@id([service_id, professional_id])
+
+  @@map("services_professional")
+}
+
+model Professional {
+  id Int @id @default(autoincrement())
+  name String
+  company_id String
+  role String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  companies Company @relation(fields: [company_id], references: [id])
+
+  services ServiceOnProfessional[]
+  event_time EventTime[]
+  
+  @@map("professionals")
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  client_id String
+  event_time_id Int
+  status String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  clients Client @relation(fields: [client_id], references: [id])
+  event_time EventTime @relation(fields: [event_time_id], references: [id])
+
+  @@map("events")
+}
+
+model EventTime {
+  id Int @id @default(autoincrement())
+  company_id String
+  professional_id Int
+  service_id Int
+  start_time DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  events Event[]
+
+  companies Company @relation(fields: [company_id], references: [id])
+  professionals Professional @relation(fields: [professional_id], references: [id])
+  services Service @relation(fields: [service_id], references: [id])
+
+  @@map("event_time")
+}

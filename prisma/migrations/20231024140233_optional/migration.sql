@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "companies" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "avatar_url" DROP NOT NULL,
+ALTER COLUMN "banner_url" DROP NOT NULL,
+ALTER COLUMN "phone" DROP NOT NULL,
+ALTER COLUMN "opening_time" DROP NOT NULL,
+ALTER COLUMN "closing_time" DROP NOT NULL,
+ALTER COLUMN "document" DROP NOT NULL;
