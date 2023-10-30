@@ -1,24 +1,20 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCompanyDto } from './dto/company.dto';
-import * as bcrypt from 'bcrypt';
+import { FirebaseService } from 'src/firebase/firebase.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private firebaseService: FirebaseService) {}
 
   async createCompany(data: CreateCompanyDto): Promise<CreateCompanyDto> {
     try {
-      const hash = await bcrypt.hash(data.password, process.env.SALT_OR_ROUNDS)
-      
       return await this.prisma.company.create({
-        data: {
-          ...data,
-          password: hash
-        }
+        data
       });
 
     } catch (e) {
+      await this.firebaseService.deleteUser(data.id)
       if (e.code == 'P2002') {
         throw new ConflictException()
       }
@@ -28,11 +24,17 @@ export class UserService {
 
   async findCompanyById(id: string) {
     try {
-      return await this.prisma.company.findFirstOrThrow({
+      const user = await this.prisma.company.findFirst({
         where: {
           id
         }
       })
+
+      if(!user.id) {
+        return new NotFoundException()
+      }
+
+      return user
     } catch (e) {
       throw new NotFoundException()
     }

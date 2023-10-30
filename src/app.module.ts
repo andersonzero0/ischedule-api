@@ -7,7 +7,8 @@ import {
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
-import { AuthMiddleware } from './auth/auth.middleware';
+import { AuthModule } from './auth/auth.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -16,15 +17,11 @@ import { AuthMiddleware } from './auth/auth.middleware';
     }),
     PrismaModule,
     UserModule,
+    AuthModule,
+    FirebaseModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-      consumer.apply(AuthMiddleware).forRoutes({
-        path: '*',
-        method: RequestMethod.ALL
-      })
-  }
+export class AppModule {
 }

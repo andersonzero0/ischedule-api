@@ -10,6 +10,10 @@ export class CategoryDto {
 export class CreateCompanyDto{
   @IsNotEmpty()
   @IsString()
+  id: string
+  
+  @IsNotEmpty()
+  @IsString()
   name: string;
 
   @IsOptional()
@@ -30,10 +34,6 @@ export class CreateCompanyDto{
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  password: string
 
   @IsOptional()
   @IsNotEmpty()

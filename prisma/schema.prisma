@@ -47,15 +47,14 @@ model CategoriesOnCompany {
 }
 
 model Company {
-  id String @id @default(uuid())
+  id String @id @unique
   name String
   description String?
   avatar_url String?
   banner_url String?
-  email String @unique
-  phone String? @unique
+  email String
+  phone String?
   document String? @unique
-  password String
   social Json?
   opening_time String?
   closing_time String?

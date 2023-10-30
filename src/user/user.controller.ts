@@ -1,7 +1,9 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe, Get, Param, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Body, Controller, Post, Request, UsePipes, ValidationPipe, Get, UseInterceptors, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateCompanyDto } from './dto/company.dto';
 import { CompanyEntity } from './entity/company.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { NotFoundError } from 'rxjs';
 
 @Controller('user')
 export class UserController {
@@ -14,8 +16,9 @@ export class UserController {
     return new CompanyEntity(await this.userService.createCompany(createCompanyDto))
   }
 
-  @Get('company/:id')
-  async findCompanyById(@Param('id') id: string): Promise<CreateCompanyDto> {
-    return this.userService.findCompanyById(id)
+  @UseGuards(AuthGuard)
+  @Get('company')
+  async findCompanyById(@Request() req: any): Promise<CreateCompanyDto | NotFoundError> {
+    return this.userService.findCompanyById(req.user)
   }
 }
