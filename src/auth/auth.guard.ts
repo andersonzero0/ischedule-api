@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
 
       const user = this.userService.findCompanyById(decodedToken.uid);
 
-      if (!user) {
+      if (user == null) {
         await this.firebaseService.deleteUser(decodedToken.uid);
         throw new UnauthorizedException();
       }

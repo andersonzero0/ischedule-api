@@ -14,7 +14,6 @@ export class UserService {
       });
 
     } catch (e) {
-      await this.firebaseService.deleteUser(data.id)
       if (e.code == 'P2002') {
         throw new ConflictException()
       }
@@ -29,10 +28,6 @@ export class UserService {
           id
         }
       })
-
-      if(!user.id) {
-        return new NotFoundException()
-      }
 
       return user
     } catch (e) {
