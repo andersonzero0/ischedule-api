@@ -3,9 +3,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { FirebaseModule } from 'src/firebase/firebase.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [PrismaModule, FirebaseModule],
+  imports: [PrismaModule, FirebaseModule, JwtModule],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService]
