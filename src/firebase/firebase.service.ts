@@ -31,6 +31,14 @@ export class FirebaseService {
     }
   }
 
+  async getUser(uid: string) {
+    try {
+      return await this.authAdmin.getUser(uid)
+    } catch (error) {
+      return error
+    }
+  }
+
   async deleteUser(uid: string) {
     try {
       return await this.authAdmin.deleteUser(uid)
