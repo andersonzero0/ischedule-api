@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUrl } from "class-validator";
 
 export class ServiceCompanyDto {
   @IsNotEmpty()
@@ -8,7 +8,11 @@ export class ServiceCompanyDto {
 
   @IsNotEmpty()
   @IsString()
-  company_id: string 
+  company_id: string
+
+  @IsNotEmpty()
+  @IsUrl()
+  background_img_url: string
 
   @IsNotEmpty()
   @IsNumber()

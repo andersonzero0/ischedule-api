@@ -85,6 +85,7 @@ model Service {
   id Int @id @default(autoincrement())
   name String
   company_id String
+  background_img_url String
   price Float
   estimated_time DateTime
   created_at DateTime @default(now())

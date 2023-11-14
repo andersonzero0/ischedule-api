@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUrl } from "class-validator";
 
 export class ServiceCompanyBodyDto {
   @IsNotEmpty()
@@ -8,6 +8,10 @@ export class ServiceCompanyBodyDto {
   @IsNotEmpty()
   @IsNumber()
   price: number
+
+  @IsNotEmpty()
+  @IsUrl()
+  background_img_url: string
 
   @IsNotEmpty()
   @IsString()

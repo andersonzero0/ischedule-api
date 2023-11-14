@@ -1,4 +1,4 @@
-import { Controller, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthSignInGuard } from './auth.signin.guard';
 import { AuthService } from './auth.service';
 
@@ -7,7 +7,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(AuthSignInGuard)
-  @Post('company/signin')
+  @Get('company/signin')
   @UsePipes(new ValidationPipe())
   async signInCompany(@Request() req: any) {
     try {
