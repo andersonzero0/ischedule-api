@@ -3,5 +3,7 @@ export class ProfessionalsDto {
 
   company_id: string
 
+  avatar_url: string
+
   role: string
 }

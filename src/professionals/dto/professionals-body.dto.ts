@@ -1,5 +1,15 @@
+import { IsNotEmpty, IsString, IsUrl } from "class-validator"
+
 export class ProfessionalsBodyDto {
+  @IsNotEmpty()
+  @IsString()
   name:string
+
+  @IsNotEmpty()
+  @IsString()
   role: string
-  services: Number[]
+
+  @IsNotEmpty()
+  @IsUrl()
+  avatar_url: string
 }

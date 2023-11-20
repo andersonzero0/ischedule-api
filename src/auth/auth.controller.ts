@@ -7,8 +7,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(AuthSignInGuard)
-  @Get('company/signin')
   @UsePipes(new ValidationPipe())
+  @Get('company/signin')
   async signInCompany(@Request() req: any) {
     try {
       return await this.authService.signInCompany(req.user_uid)

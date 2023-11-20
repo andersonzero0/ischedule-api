@@ -82,7 +82,7 @@ model Like {
 }
 
 model Service {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   company_id String
   background_img_url String
@@ -100,8 +100,8 @@ model Service {
 }
 
 model ServiceOnProfessional {
-  service_id Int
-  professional_id Int
+  service_id String
+  professional_id String
 
   service Service @relation(fields: [service_id], references: [id])
   professional Professional @relation(fields: [professional_id], references: [id])
@@ -112,9 +112,10 @@ model ServiceOnProfessional {
 }
 
 model Professional {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
   company_id String
+  avatar_url String
   role String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
@@ -145,8 +146,8 @@ model Event {
 model EventTime {
   id Int @id @default(autoincrement())
   company_id String
-  professional_id Int
-  service_id Int
+  professional_id String
+  service_id String
   start_time DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())

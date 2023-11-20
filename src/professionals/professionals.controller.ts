@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProfessionalsService } from './professionals.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProfessionalsBodyDto } from './dto/professionals-body.dto';
@@ -13,10 +13,31 @@ export class ProfessionalsController {
   async createProfessional(@Body() data: ProfessionalsBodyDto, @Request() req: any) {
     try {
       return await this.professionalService.createProfessionalsService({
-        name: data.name,
-        role: data.role,
+        ...data,
         company_id: req.user.uid
-      }, data.services)
+      })
+    } catch (error) {
+      return error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Patch(':id')
+  async updateProfessional(@Body() data: ProfessionalsBodyDto, @Param('id') id: string) {
+    try {
+      return await this.professionalService.updateProfessional(data, id)
+    } catch (error) {
+      return error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Delete(':id')
+  async deleteProfessional(@Param('id') id: string) {
+    try {
+      return await this.professionalService.deleteProfessional(id)
     } catch (error) {
       return error
     }

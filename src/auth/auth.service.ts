@@ -13,6 +13,7 @@ export class AuthService {
     try {
       const user = await this.userService.findCompanyById(id);
 
+
       if(user == null) {
         throw new NotFoundException()
       }
