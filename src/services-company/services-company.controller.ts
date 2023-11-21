@@ -17,7 +17,8 @@ export class ServicesCompanyController {
         company_id: req.user.uid
       })
     } catch (error) {
-      return error
+      console.log(error)
+      throw new Error(error)
     }
   }
 }

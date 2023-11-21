@@ -10,6 +10,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @Get('company/signin')
   async signInCompany(@Request() req: any) {
+    console.log(req.user_uid)
     try {
       return await this.authService.signInCompany(req.user_uid)
     } catch (error) {

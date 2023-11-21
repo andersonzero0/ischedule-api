@@ -8,11 +8,15 @@ export class ServicesCompanyService {
 
   async createService(data: ServiceCompanyDto) {
     try {
-      return await this.prisma.service.create({
+      const response = await this.prisma.service.create({
         data
       })
-    } catch (error) {
+      console.log(response)
       
+      return response
+    } catch (error) {
+      throw new Error(error)
     }
   }
 }
+

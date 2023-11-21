@@ -16,7 +16,7 @@ export class ServiceCompanyDto {
 
   @IsNotEmpty()
   @IsNumber()
-  price: number
+  price: string
 
   @IsNotEmpty()
   @IsString()

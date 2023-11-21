@@ -86,8 +86,8 @@ model Service {
   name String
   company_id String
   background_img_url String
-  price Float
-  estimated_time DateTime
+  price String
+  estimated_time String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
 

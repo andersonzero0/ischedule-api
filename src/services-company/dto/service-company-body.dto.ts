@@ -6,8 +6,8 @@ export class ServiceCompanyBodyDto {
   name: string
 
   @IsNotEmpty()
-  @IsNumber()
-  price: number
+  @IsString()
+  price: string
 
   @IsNotEmpty()
   @IsUrl()
