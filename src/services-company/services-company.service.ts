@@ -8,12 +8,23 @@ export class ServicesCompanyService {
 
   async createService(data: ServiceCompanyDto) {
     try {
-      const response = await this.prisma.service.create({
+      return await this.prisma.service.create({
         data
       })
-      console.log(response)
       
-      return response
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  async updateService(data: ServiceCompanyDto, id: string) {
+    try {
+      return await this.prisma.service.update({
+        where: {
+          id
+        },
+        data
+      })
     } catch (error) {
       throw new Error(error)
     }
