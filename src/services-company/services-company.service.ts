@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ServiceCompanyDto } from './dto/service-company.dto';
+import { ServiceCompanyBodyDto } from './dto/service-company-body.dto';
 
 @Injectable()
 export class ServicesCompanyService {
@@ -17,7 +18,7 @@ export class ServicesCompanyService {
     }
   }
 
-  async updateService(data: ServiceCompanyDto, id: string) {
+  async updateService(data: ServiceCompanyBodyDto, id: string) {
     try {
       return await this.prisma.service.update({
         where: {

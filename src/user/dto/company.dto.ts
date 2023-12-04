@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional } from 'class-validator'
+import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional, isNotEmpty, isString } from 'class-validator'
 
 export class CategoryDto {
   category: {
@@ -15,6 +15,16 @@ export class CreateCompanyDto{
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  company_name: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  address: string;
 
   @IsOptional()
   @IsNotEmpty()

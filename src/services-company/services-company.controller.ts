@@ -26,7 +26,7 @@ export class ServicesCompanyController {
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   @Put(':id')
-  async updateService(@Body() data: ServiceCompanyDto, @Param('id') id: string) {
+  async updateService(@Body() data: ServiceCompanyBodyDto, @Param('id') id: string) {
     try {
       return await this.serviceCompanyService.updateService(data, id)
     } catch (error) {

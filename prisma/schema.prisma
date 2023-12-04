@@ -48,6 +48,8 @@ model CategoriesOnCompany {
 model Company {
   id String @id @unique
   name String
+  company_name String?
+  address String?
   description String?
   avatar_url String?
   banner_url String?
