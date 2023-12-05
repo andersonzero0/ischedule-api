@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, UsePipes, ValidationPipe, Get, UseInterceptors, ClassSerializerInterceptor, UseGuards, Param, NotFoundException } from '@nestjs/common';
+import { Body, Patch, Controller, Post, Request, UsePipes, ValidationPipe, Get, UseInterceptors, ClassSerializerInterceptor, UseGuards, Param, NotFoundException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateCompanyDto } from './dto/company.dto';
 import { CompanyEntity } from './entity/company.entity';
@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { ClientDto } from './dto/client.dto';
 import { Client } from '@prisma/client';
 import { AuthSignInGuard } from 'src/auth/auth.signin.guard';
+import { PerfilCompanyDto } from './dto/perfil-company.dto';
 
 @Controller('user')
 export class UserController {
@@ -24,6 +25,17 @@ export class UserController {
   async createClient(@Body() data: ClientDto): Promise<Client> {
     try {
       return await this.userService.createClient(data);
+    } catch (error) {
+      return error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Patch('company')
+  async updatePerfilCompany(@Body() data: PerfilCompanyDto, @Request() req: any) {
+    try {
+      return await this.userService.updatePerfilCompany(data, req.user.uid)
     } catch (error) {
       return error
     }

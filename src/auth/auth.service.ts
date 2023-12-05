@@ -13,7 +13,6 @@ export class AuthService {
     try {
       const user = await this.userService.findCompanyById(id);
 
-
       if(user == null) {
         throw new NotFoundException()
       }
@@ -21,7 +20,7 @@ export class AuthService {
       const payload = {
         uid: user.id,
         email: user.email
-      }
+      }  
 
       return {
         access_token: await this.jwtService.signAsync(payload)

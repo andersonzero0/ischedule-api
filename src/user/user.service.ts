@@ -4,6 +4,7 @@ import { CreateCompanyDto } from './dto/company.dto';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { ClientDto } from './dto/client.dto';
 import { Client, Company } from '@prisma/client';
+import { PerfilCompanyDto } from './dto/perfil-company.dto';
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,19 @@ export class UserService {
     }
   }
 
+  async updatePerfilCompany(data: PerfilCompanyDto, id: string) {
+    try {
+      return await this.prisma.company.update({
+        data,
+        where: {
+          id
+        }
+      })
+    } catch (error) {
+      return error
+    }
+  }
+
   async createClient(data: ClientDto): Promise<Client> {
     try {
       return await this.prisma.client.create({
@@ -51,7 +65,7 @@ export class UserService {
         },
         include: {
           service: true,
-          professionals: true
+          professionals: true,
         }
       })
 

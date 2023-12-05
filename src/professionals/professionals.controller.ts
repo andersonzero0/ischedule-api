@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Param, Patch, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProfessionalsService } from './professionals.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProfessionalsBodyDto } from './dto/professionals-body.dto';
+import { ScheduleProfessionalDto } from './dto/schedule-professional.dto';
 
 @Controller('professionals')
 export class ProfessionalsController {
@@ -38,6 +39,27 @@ export class ProfessionalsController {
   async deleteProfessional(@Param('id') id: string) {
     try {
       return await this.professionalService.deleteProfessional(id)
+    } catch (error) {
+      return error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Put('schedule/:id')
+  async updateScheduleProfessional(@Param('id') id: string, data: ScheduleProfessionalDto) {
+    try {
+      return await this.professionalService.updateScheduleProfessional(data, id)
+    } catch (error) {
+      return error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('schedule/:id')
+  async findScheduleProfessional(@Param('id') id: string) {
+    try {
+      return await this.professionalService.findScheduleProfessional(id)
     } catch (error) {
       return error
     }

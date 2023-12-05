@@ -124,10 +124,24 @@ model Professional {
 
   companies Company @relation(fields: [company_id], references: [id])
 
+  schedule ScheduleProfessional?
+
   services ServiceOnProfessional[]
   event_time EventTime[]
   
   @@map("professionals")
+}
+
+model ScheduleProfessional {
+  id String @id @default(uuid())
+  entry_times String
+  departure_time String
+  days_week Json
+  
+  professional Professional @relation(fields: [professionalId], references: [id])
+  professionalId String @unique
+
+  @@map("schedule_professional")
 }
 
 model Event {
