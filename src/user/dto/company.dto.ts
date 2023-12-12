@@ -1,10 +1,28 @@
 import { Prisma } from '@prisma/client';
-import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional, isNotEmpty, isString } from 'class-validator'
+import { IsEmail, IsString, IsArray, IsNotEmpty, IsUrl, IsOptional, isNotEmpty, isString, IsBoolean } from 'class-validator'
 
 export class CategoryDto {
   category: {
     id: Number
   }
+}
+
+export class Schedule {
+  @IsNotEmpty()
+  @IsString()
+  name: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+  checked: boolean
+
+  @IsNotEmpty()
+  @IsString()
+  open_time: string
+
+  @IsNotEmpty()
+  @IsString()
+  close_time: string
 }
 
 export class CreateCompanyDto{
@@ -62,13 +80,8 @@ export class CreateCompanyDto{
 
   @IsOptional()
   @IsNotEmpty()
-  @IsString()
-  opening_time: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  closing_time: string;
+  @IsArray()
+  schedule: Prisma.JsonValue;
 
   @IsOptional()
   created_at: Date

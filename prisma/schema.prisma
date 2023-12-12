@@ -57,8 +57,7 @@ model Company {
   phone String?
   document String? @unique
   social Json?
-  opening_time String?
-  closing_time String?
+  schedule Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
 

@@ -1,6 +1,6 @@
 import { Body, Patch, Controller, Post, Request, UsePipes, ValidationPipe, Get, UseInterceptors, ClassSerializerInterceptor, UseGuards, Param, NotFoundException } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateCompanyDto } from './dto/company.dto';
+import { CreateCompanyDto, Schedule } from './dto/company.dto';
 import { CompanyEntity } from './entity/company.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ClientDto } from './dto/client.dto';
@@ -12,6 +12,8 @@ import { PerfilCompanyDto } from './dto/perfil-company.dto';
 export class UserController {
   constructor (private userService: UserService) {} 
 
+  /* -------------------- CONTROLLERS - COMPANY --------------------------------- */
+  //CREATE COMPANY
   @UseGuards(AuthSignInGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(new ValidationPipe())
@@ -20,6 +22,52 @@ export class UserController {
     return new CompanyEntity(await this.userService.createCompany(createCompanyDto, req.user_uid))
   }
 
+  //READ COMPANY
+  @UseGuards(AuthGuard)
+  @Get('company')
+  async findCompanyById(@Request() req: any): Promise<CreateCompanyDto | boolean> {
+    return this.userService.findCompanyById(req.user.uid)
+  }
+  
+  //UPDATE COMPANY
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Patch('company')
+  async updatePerfilCompany(@Body() data: PerfilCompanyDto, @Request() req: any) {
+    console.log(data)
+    try {
+      return await this.userService.updatePerfilCompany(data, req.user.uid)
+    } catch (error) {
+      return error
+    }
+  }
+
+  //SET SCHEDULE
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  @Patch('company/schedule')
+  async setSchedule(@Body() data: Schedule[], @Request() req: any) {
+    try {
+      return await this.userService.setSchedule(data, req.user.uid)
+    } catch (error) {
+      return error
+    }
+  }
+
+  //GET SCHEDULE
+  @UseGuards(AuthGuard)
+  @Get('company/schedule')
+  async getSchedule(@Request() req: any) {
+    try {
+      return await this.userService.getSchedule(req.user.uid)
+    } catch (error) {
+      return error
+    }
+  }
+
+  
+  /* -------------------- CONTROLLERS - CLIENT --------------------------------- */
+  //CREATE CLIENT
   @UsePipes(new ValidationPipe())
   @Post('client')
   async createClient(@Body() data: ClientDto): Promise<Client> {
@@ -28,22 +76,5 @@ export class UserController {
     } catch (error) {
       return error
     }
-  }
-
-  @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
-  @Patch('company')
-  async updatePerfilCompany(@Body() data: PerfilCompanyDto, @Request() req: any) {
-    try {
-      return await this.userService.updatePerfilCompany(data, req.user.uid)
-    } catch (error) {
-      return error
-    }
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('company')
-  async findCompanyById(@Request() req: any): Promise<CreateCompanyDto | boolean> {
-    return this.userService.findCompanyById(req.user.uid)
   }
 }

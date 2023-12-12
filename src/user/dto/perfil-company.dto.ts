@@ -16,12 +16,4 @@ export class PerfilCompanyDto {
     @IsNotEmpty()
     @IsUrl()
     banner_url: string;
-
-    @IsNotEmpty()
-    @IsString()
-    opening_time: string;
-
-    @IsNotEmpty()
-    @IsString()
-    closing_time: string
 }
