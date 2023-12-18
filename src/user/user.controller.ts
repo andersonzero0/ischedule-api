@@ -34,7 +34,6 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Patch('company')
   async updatePerfilCompany(@Body() data: PerfilCompanyDto, @Request() req: any) {
-    console.log(data)
     try {
       return await this.userService.updatePerfilCompany(data, req.user.uid)
     } catch (error) {
@@ -42,17 +41,6 @@ export class UserController {
     }
   }
 
-  //SET SCHEDULE
-  @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
-  @Patch('company/schedule')
-  async setSchedule(@Body() data: Schedule[], @Request() req: any) {
-    try {
-      return await this.userService.setSchedule(data, req.user.uid)
-    } catch (error) {
-      return error
-    }
-  }
 
   //GET SCHEDULE
   @UseGuards(AuthGuard)

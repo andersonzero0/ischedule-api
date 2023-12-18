@@ -45,40 +45,4 @@ export class ProfessionalsService {
       return error
     }
   }
-
-  async findScheduleProfessional(id: string) {
-    try {
-      return await this.prisma.scheduleProfessional.findFirst({
-        where: {
-          professionalId: id
-        }
-      })
-    } catch (error) {
-      return error
-    }
-  }
-
-  async updateScheduleProfessional(data: ScheduleProfessionalDto, id: string) {
-    try {
-      const scheduleProfessional = await this.findScheduleProfessional(id)
-
-      if(!scheduleProfessional) {
-        return await this.prisma.scheduleProfessional.create({
-          data: {
-            ...data,
-            professionalId: id
-          }
-        })
-      }
-
-      return await this.prisma.scheduleProfessional.update({
-        data,
-        where: {
-          professionalId: id
-        }
-      })
-    } catch (error) {
-      return error
-    }
-  }
 }

@@ -61,7 +61,8 @@ export class UserService {
         }
       })
     } catch (error) {
-      return error
+      console.log(error)
+      throw error
     }
   }
 

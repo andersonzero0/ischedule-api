@@ -43,25 +43,4 @@ export class ProfessionalsController {
       return error
     }
   }
-
-  @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
-  @Put('schedule/:id')
-  async updateScheduleProfessional(@Param('id') id: string, data: ScheduleProfessionalDto) {
-    try {
-      return await this.professionalService.updateScheduleProfessional(data, id)
-    } catch (error) {
-      return error
-    }
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('schedule/:id')
-  async findScheduleProfessional(@Param('id') id: string) {
-    try {
-      return await this.professionalService.findScheduleProfessional(id)
-    } catch (error) {
-      return error
-    }
-  }
 }

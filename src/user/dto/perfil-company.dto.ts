@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, IsUrl } from "class-validator";
+import { IsArray, IsNotEmpty, IsString, IsUrl } from "class-validator";
+import { Prisma } from '@prisma/client';
 
 export class PerfilCompanyDto {
     @IsNotEmpty()
@@ -8,6 +9,10 @@ export class PerfilCompanyDto {
     @IsNotEmpty()
     @IsString()
     address: string;
+
+    @IsNotEmpty()
+    @IsArray()
+    schedule: Prisma.JsonValue;
 
     @IsNotEmpty()
     @IsUrl()
