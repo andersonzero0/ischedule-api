@@ -42,6 +42,11 @@ export class UserService {
         include: {
           service: true,
           professionals: true,
+          _count: {
+            select: {
+              likes: true,
+            }
+          }
         }
       })
 
