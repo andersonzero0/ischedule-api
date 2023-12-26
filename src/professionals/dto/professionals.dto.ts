@@ -7,6 +7,8 @@ export class ProfessionalsDto {
 
   schedule: Prisma.JsonValue
 
+  services: string[]
+
   avatar_url: string
 
   role: string

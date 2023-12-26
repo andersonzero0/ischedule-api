@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotImplementedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProfessionalsDto } from './dto/professionals.dto';
 import { ProfessionalsBodyDto } from './dto/professionals-body.dto';
@@ -12,26 +16,41 @@ export class ProfessionalsService {
   async createProfessionalsService(data: ProfessionalsDto) {
     try {
       return await this.prisma.professional.create({
-        data,
+        data: {
+          ...data,
+          services: {
+            create: data.services.map((service) => ({ service_id: service })),
+          },
+        },
         include: {
           services: true,
         },
       });
     } catch (error) {
-      return error;
+      throw new NotImplementedException();
     }
   }
 
   async updateProfessional(data: ProfessionalsBodyDto, id: string) {
+    console.log(data);
     try {
       return await this.prisma.professional.update({
         where: {
           id,
         },
-        data,
+        data: {
+          ...data,
+          services: {
+            connectOrCreate: data.services.map((service) => ({
+              where: { service_id_professional_id: { service_id: service, professional_id: id } },
+              create: { service_id: service },
+            })),
+          },
+        },
       });
     } catch (error) {
-      return error;
+      console.log(error);
+      throw new NotAcceptableException();
     }
   }
 
@@ -39,14 +58,14 @@ export class ProfessionalsService {
     try {
       const response = await this.prisma.professional.update({
         where: {
-          id
+          id,
         },
         data: {
-          schedule: data
-        }
-      })
+          schedule: data,
+        },
+      });
 
-      return response
+      return response;
     } catch (error) {
       return error;
     }
@@ -54,13 +73,20 @@ export class ProfessionalsService {
 
   async deleteProfessional(id: string) {
     try {
+      await this.prisma.serviceOnProfessional.deleteMany({
+        where: {
+          professional_id: id,
+        },
+      });
+
       return await this.prisma.professional.delete({
         where: {
           id,
         },
       });
     } catch (error) {
-      return error;
+      console.log(error);
+      throw new NotImplementedException();
     }
   }
 }

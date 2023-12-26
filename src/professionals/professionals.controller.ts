@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, Param, Patch, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProfessionalsService } from './professionals.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProfessionalsBodyDto } from './dto/professionals-body.dto';
@@ -19,7 +19,7 @@ export class ProfessionalsController {
         company_id: req.user.uid
       })
     } catch (error) {
-      return error
+      throw new NotAcceptableException();
     }
   }
 
@@ -30,7 +30,7 @@ export class ProfessionalsController {
     try {
       return await this.professionalService.updateProfessional(data, id)
     } catch (error) {
-      return error
+      throw new NotAcceptableException()
     }
   }
 

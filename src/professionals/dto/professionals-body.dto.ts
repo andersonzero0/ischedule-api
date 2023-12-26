@@ -15,6 +15,10 @@ export class ProfessionalsBodyDto {
   @IsArray()
   schedule: Prisma.JsonValue
 
+  @IsOptional()
+  @IsArray()
+  services: string[]
+
   @IsNotEmpty()
   @IsUrl()
   avatar_url: string
