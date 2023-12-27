@@ -32,8 +32,20 @@ export class ProfessionalsService {
   }
 
   async updateProfessional(data: ProfessionalsBodyDto, id: string) {
-    console.log(data);
     try {
+      const servicesProfessional =
+        await this.prisma.serviceOnProfessional.findMany({
+          where: {
+            professional_id: id,
+          },
+        });
+
+      const servicesDelete = await Promise.all(
+        servicesProfessional.filter(
+          (service) => !data.services.includes(service.service_id),
+        ),
+      );
+
       return await this.prisma.professional.update({
         where: {
           id,
@@ -42,8 +54,19 @@ export class ProfessionalsService {
           ...data,
           services: {
             connectOrCreate: data.services.map((service) => ({
-              where: { service_id_professional_id: { service_id: service, professional_id: id } },
+              where: {
+                service_id_professional_id: {
+                  service_id: service,
+                  professional_id: id,
+                },
+              },
               create: { service_id: service },
+            })),
+            delete: servicesDelete.map((service) => ({
+              service_id_professional_id: {
+                service_id: service.service_id,
+                professional_id: id,
+              },
             })),
           },
         },
