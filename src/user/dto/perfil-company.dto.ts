@@ -19,6 +19,10 @@ export class PerfilCompanyDto {
     schedule: Prisma.JsonValue;
 
     @IsOptional()
+    @IsArray()
+    categories: number[];
+
+    @IsOptional()
     @IsNotEmpty()
     @IsUrl()
     avatar_url: string;

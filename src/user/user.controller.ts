@@ -7,6 +7,7 @@ import { ClientDto } from './dto/client.dto';
 import { Client } from '@prisma/client';
 import { AuthSignInGuard } from 'src/auth/auth.signin.guard';
 import { PerfilCompanyDto } from './dto/perfil-company.dto';
+import { LikeDto } from './dto/like.dto';
 
 @Controller('user')
 export class UserController {
@@ -53,6 +54,18 @@ export class UserController {
     }
   }
 
+  // LIKE
+  // Auth Guard Request
+  @UsePipes(new ValidationPipe())
+  @Post('like')
+  async like(@Body() data: LikeDto) {
+    try {
+      return await this.userService.likeCompany(data);
+    } catch (error) {
+      throw new NotFoundException()
+    }
+  }
+
   
   /* -------------------- CONTROLLERS - CLIENT --------------------------------- */
   //CREATE CLIENT
@@ -65,4 +78,5 @@ export class UserController {
       return error
     }
   }
+
 }

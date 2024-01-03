@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Client {
-  id String @id @unique
+  id String @id @unique @default(cuid())
   name String
   avatar_url String
   email String @unique
@@ -151,6 +151,7 @@ model EventTime {
   professional_id String
   service_id String
   start_time DateTime
+  
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
 

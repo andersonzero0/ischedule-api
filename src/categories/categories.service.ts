@@ -6,9 +6,9 @@ import { CategoriesDto } from './dto/categorie.dto';
 export class CategoriesService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CategoriesDto) {
+  async create(data: CategoriesDto[]) {
     try {
-      const category = await this.prisma.category.create({
+      const category = await this.prisma.category.createMany({
         data
       });
       return category;

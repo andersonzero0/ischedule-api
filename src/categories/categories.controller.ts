@@ -12,7 +12,7 @@ export class CategoriesController {
   @UseGuards(AuthGuardIpAccess)
   @UsePipes(new ValidationPipe())
   @Post()
-  async create (@Body() data: CategoriesDto) {
+  async create (@Body() data: CategoriesDto[]) {
     try {
       const category = await this.categoriesService.create(data);
       return category;
