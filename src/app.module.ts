@@ -9,6 +9,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { ServicesCompanyModule } from './services-company/services-company.module';
 import { ProfessionalsModule } from './professionals/professionals.module';
 import { CategoriesModule } from './categories/categories.module';
+import { EventTimeModule } from './event-time/event-time.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CategoriesModule } from './categories/categories.module';
     ServicesCompanyModule,
     ProfessionalsModule,
     CategoriesModule,
+    EventTimeModule,
   ],
   controllers: [],
   providers: [],

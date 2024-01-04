@@ -133,7 +133,7 @@ model Professional {
 model Event {
   id Int @id @default(autoincrement())
   client_id String
-  event_time_id Int
+  event_time_id String
   status String
 
   created_at DateTime @default(now())
@@ -146,11 +146,12 @@ model Event {
 }
 
 model EventTime {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   company_id String
   professional_id String
   service_id String
   start_time DateTime
+  end_time DateTime
   
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
